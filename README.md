@@ -1,7 +1,7 @@
-# XKE IoT Hands On
+# EPF IoT Hands On
 
-This hands-on aims at setting up a mini IoT system in 2 hours, using Raspberry 
-Pi and sensors available.
+This hands-on aims at setting up a mini IoT system in 2-3 hours, using Raspberry 
+Pi and a temperature / humidity sensor.
 
 ## Prerequisite
 
@@ -19,13 +19,14 @@ Every group disposes following materials:
 - 1 micro SD card
 - 1 breadboard
 - Electronic jumpers
-- Plus: Wifi keys (if you guys want to play with the wifi)
 
 ### Technologies
 
 In order to succeed this Hands-on, you’ll need:
-- a CloudMQTT (https://www.cloudmqtt.com/) account
-- a MongoLab (https://mongolab.com/home) account
+- a [CloudMQTT](https://www.cloudmqtt.com/) account
+  - *Advanced*: set up your own Mosquitto MQTT broker
+- a [MongoLab](https://mongolab.com/home) account
+  - *Advanced*: use your local MongoDB server
 - basic knowledge of Node.js
 - basic knowledge of Python
 
@@ -97,7 +98,7 @@ This part focus on explaining how we use different cloud services to build the d
 
 ### 3.1 Publish to MQTT
 
-One of the most popular open source MQTT broker is [Mosquitto](http://mosquitto.org/). The service [CloudMQTT](https://www.cloudmqtt.com/) we choose for this hands-on are managed Mosquitto servers in the cloud. 
+One of the most popular open source MQTT broker is [Mosquitto](http://mosquitto.org/). The service [CloudMQTT](https://www.cloudmqtt.com/) we choose for this hands-on manages Mosquitto servers in the cloud. 
 
 Before pushbling data to the MQTT broker, you have to define:
 - the topic name
@@ -134,8 +135,11 @@ mqttClient.connect(url.hostname, url.port)
 To verify the data is well received by the MQTT broker. Create a simple node.js application using [mqtt.js](https://github.com/mqttjs/MQTT.js) to subscribe to the topic that you previously defined and listen to the message:
 
 ```Javascript
+const mqttUrl = '';
+
 var mqtt = require('mqtt');
-var mqttClient = mqtt.connect("");
+var mqttClient = mqtt.connect(mqttUrl);
+
 mqttClient.on('connect', function () {
   console.log("MQTT connected.")
   // TODO subscribe to the topic
@@ -150,9 +154,13 @@ mqttClient.on('message', function (topic, message) {
 
 ## Step 4: Store data
 
-A very important part of IoT system is to collect data for future analysis. So now it's time to store them somewhere. In the example, we choose [MongoDB](https://www.mongodb.com/) to finish the simple data insertion and query:
+A very important part of IoT system is to collect data for future analysis. So now it's time to store them somewhere. In the example, we choose [MongoDB](https://www.mongodb.com/) to finish the simple data insertion and query. 
+
+Sign up on [MongoLab](https://mongolab.com/home) or use your own local MongoDB server:
 
 ```Javascript
+const mongodbUrl = '';
+
 var mongoClient = require('mongodb').MongoClient;
 mongoClient.connect(mongodbUrl, function(err, db) {
   if(!err) {
@@ -170,6 +178,7 @@ mqttClient.on('message', function (topic, message) {
 var insertSensorData = function(db, data, cb) {
 	// TODO insert data to db
 };
+
 var findLastSensorDataItem = function(db, cb) {
 	// TODO fetch the last inserted data item
 };
