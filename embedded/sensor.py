@@ -4,8 +4,8 @@ import Adafruit_DHT
 import paho.mqtt.client as mqtt
 import json, urlparse, time
 
-# Sensor should be set to Adafruit_DHT.DHT11
-sensor = Adafruit_DHT.DHT11
+# Sensor should be set to Adafruit_DHT.DHT22
+sensor = Adafruit_DHT.DHT22
 sensor_id = 1
 
 # Example using a Raspberry Pi with DHT sensor
