@@ -210,7 +210,7 @@ app.listen(3000, function () {
 
 ## Going further
 
-- Create your own MQTT broker using [Mosquitto MQTT](https://mosquitto.org/) on your Raspberry Pi
+- Set up your own MQTT broker on Raspberry Pi using [Mosquitto MQTT](https://mosquitto.org/)
 - Data aggregation: aggregate the data collected from the past period to generate more interesting visulization
 - Create Websocket server to push data in realtime using [Socket.io](http://socket.io/)
 - Deploy your application on a cloud service such as [Heroku](https://www.heroku.com/)
